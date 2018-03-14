@@ -22,13 +22,13 @@ public class Event extends Events {
         double ryA = yA + ballA.getVy()*(time-clock);
         double rxB = xB + ballB.getVx()* (time-clock);
         double ryB = yB + ballB.getVy()*(time-clock);
-        System.out.println("rxA: "+ rxA);
-        System.out.println("ryA: "+ ryA);
-        System.out.println("rxB: "+ rxB);
-        System.out.println("ryB: "+ ryB);
+//        System.out.println("rxA: "+ rxA);
+//        System.out.println("ryA: "+ ryA);
+//        System.out.println("rxB: "+ rxB);
+//        System.out.println("ryB: "+ ryB);
         Point2D pointA = new Point2D(rxA,ryA);
         Point2D pointB = new Point2D(rxB,ryB);
-        System.out.println("distance between centers: "+pointA.distanceTo(pointB));
+//        System.out.println("distance between centers: "+pointA.distanceTo(pointB));
         double impulse  = ballA.impulse(ballB,rxA,ryA,rxB,ryB);
         double impulseX = impulse*(rxA - rxB)/(ballA.getRadius() + ballB.getRadius());
         double impulseY = impulse*(ryA - ryB)/(ballA.getRadius() + ballB.getRadius());

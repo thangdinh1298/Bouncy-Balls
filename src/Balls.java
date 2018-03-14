@@ -97,7 +97,7 @@ public class Balls {
         double drdr = dx*dx + dy*dy;
         double sigma = this.radius + that.radius;
         double d = (dvdr*dvdr) - dvdv * (drdr - sigma*sigma);
-        // if (drdr < sigma*sigma) StdOut.println("overlapping particles");
+         if (drdr < sigma*sigma) System.out.println("Overlapping particles");
         if (d < 0) return -1;
         return -(dvdr + Math.sqrt(d)) / dvdv;
     }

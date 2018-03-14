@@ -7,7 +7,7 @@ import java.awt.*;
 public class Window {
     private static double boundX = 1;
     private static double boundY = 1;
-    private int numBall = 10;
+    private int numBall = 3;
     private static Balls[] balls;
     private double clock = 0.0;
     public static double getBoundX(){
@@ -18,25 +18,26 @@ public class Window {
     }
     public double lastTimeUpdate;
 
-    //todo make fps as stable as possible
+    //todo fix possible loss of kinetic energy preservation due to three-way(n-way) collision
 
     public Window(){
         balls = new Balls[numBall];
         for(int i = 0; i <numBall; i ++){ // create n balls
-            double x = StdRandom.uniform(0.1,1);
-            double y = StdRandom.uniform(0.1,1);
+            float radius = (float) 0.03;
+            double x = StdRandom.uniform(0.1,boundX-radius);
+            double y = StdRandom.uniform(0.1,boundY-radius);
             double vx = StdRandom.uniform(-0.005,0.005);
             double vy = StdRandom.uniform(-0.005,0.005);
             int r = StdRandom.uniform(0,255);
             int g = StdRandom.uniform(0,255);
             int b = StdRandom.uniform(0,255);
-            Balls ball = new Balls(x,y,vx,vy,0.03,1,new Color(r,g,b));
+            Balls ball = new Balls(x,y,vx,vy,radius,1,new Color(r,g,b));
             balls[i] = ball;
         }
 
 //        Balls ball1 = new Balls(0.1,0.1,0.005,0,0.03,1,Color.red);
-//        Balls ball2 = new Balls(0.5,0.5,0.005,0,0.03,1,Color.black);
-//        Balls ball3 = new Balls(0.3,0.159,-0.005,0,0.03,1,Color.BLUE);
+//        Balls ball2 = new Balls(0.5,0.1,-0.005,0,0.03,1,Color.black);
+//        Balls ball3 = new Balls(0.3,0.1,0,0,0.03,1,Color.BLUE);
 //        balls[0] = ball1;
 //        balls[1] = ball2;
 //        balls[2] = ball3;
@@ -65,7 +66,6 @@ public class Window {
                 if(t > 0){ // != -1
                     Event e = new Event(balls[i],balls[j],t+clock);
                         eventQueue.insert(e);
-//                    System.out.println(t);
                 }
             }
         }
@@ -89,13 +89,8 @@ public class Window {
         double yB = 0;
 
         while(!eventQueue.isEmpty()){
-//            for(Events ex:eventQueue){
-//                System.out.println(ex);
-//            }
             Events e = eventQueue.delMin();
-//            System.out.println(e.getT() + ": "+ e.getClass());
             if(e.getT() < clock){
-//                System.out.println("time to small");
                 continue;
             }
             if(!e.isValid()) {
@@ -113,15 +108,9 @@ public class Window {
                 e.collide();
             }
             else if(e.getClass() == Event.class){
-//                System.out.println(e.getT());
                 e.collide(xA,yA,xB,yB,e.getT(),clock);
-//                System.out.println("collide");
             }
-//            if(e.getClass() == Event.class){
-//                System.out.println("After collision: " + e.distance());
-//            }
             clock = e.getT();
-//            System.out.println("clock set to: "+ clock);
             eventPrediction(eventQueue);
         }
     }

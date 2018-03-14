@@ -13,7 +13,6 @@ public class WallEvent extends Events {
         if(wall == 1 || wall == 3) ballA.setVy(-ballA.getVy());
         if(wall == 2 || wall == 4) ballA.setVx(-ballA.getVx());
         ballA.count ++;
-//        System.out.println("Wall collided");
     }
 
     public boolean isValid(){
